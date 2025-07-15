@@ -5,15 +5,21 @@ import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
 
 type LoginForm = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm<LoginForm>();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     // Handle login logic here
     console.log("Login data:", data);
+    await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      callbackUrl: "/issues/new",
+    });
   });
 
   return (

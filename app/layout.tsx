@@ -1,7 +1,7 @@
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
+import Providers from "./providers";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -12,15 +12,15 @@ const inter = Inter({
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <Theme accentColor="violet" radius="large">
+        <Providers>
           <main>{children}</main>
-        </Theme>
+        </Providers>
       </body>
     </html>
   );
