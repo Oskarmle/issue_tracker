@@ -9,7 +9,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.format(), { status: 400 });
 
   const newIssue = await prisma.issue.create({
-    data: { title: body.title, description: body.description },
+    data: {
+      title: body.title,
+      description: body.description,
+      User: { connect: { id: body.userId } },
+    },
   });
 
   return NextResponse.json(newIssue, { status: 201 });
@@ -18,6 +22,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   const issues = await prisma.issue.findMany({
     orderBy: { createdAt: "desc" },
+    include: { User: { select: { firstName: true, lastName: true } } },
   });
   return NextResponse.json(issues, { status: 200 });
 }
