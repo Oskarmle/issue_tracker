@@ -35,7 +35,6 @@ const IssueTable = () => {
     const loadIssues = async () => {
       const fetchedIssues = await fetchIssues();
       setIssues(fetchedIssues);
-      console.log("Issues loaded", fetchedIssues);
     };
     loadIssues();
   }, []);

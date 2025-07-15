@@ -15,7 +15,7 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center border-gray-200">
+    <nav className="flex space-x-6 border-b px-5 h-14 items-center border-gray-200">
       <Link href="/">
         <AiFillBug />
       </Link>
