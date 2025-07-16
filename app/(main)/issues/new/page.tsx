@@ -34,7 +34,6 @@ const NewIssuePage = () => {
 
   // Route protection
   const { status } = useSession();
-
   if (status === "loading") return <div>Loading...</div>;
   if (status === "unauthenticated") redirect("/auth/login");
 

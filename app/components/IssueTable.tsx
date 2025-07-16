@@ -2,7 +2,6 @@
 import { Table } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { hash } from "bcrypt";
 
 type IssueForm = {
   title: string;

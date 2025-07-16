@@ -1,9 +1,17 @@
+'use client';
 import { Button, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 import IssueTable from "../../components/IssueTable";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const IssuesPage = () => {
+  // Route protection
+  const { status } = useSession();
+  if (status === "loading") return <div>Loading...</div>;
+  if (status === "unauthenticated") redirect("/auth/login");
+
   return (
     <div className="flex flex-col max-w-xxl gap-10">
       <IssueTable />

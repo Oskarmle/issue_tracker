@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma/client";
 import { registerSchema } from "@/app/validationSchemas";
 import { hash } from "bcrypt";
+import { getToken } from "next-auth/jwt";
 
+// Create a new user
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const validation = registerSchema.safeParse(body);
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(newUser, { status: 201 });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Email may already be in use" },
@@ -32,10 +34,21 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// export async function GET() {
-//   const issues = await prisma.issue.findMany({
-//     orderBy: { createdAt: "desc" },
-//     include: { User: { select: { firstName: true, lastName: true } } },
-//   });
-//   return NextResponse.json(issues, { status: 200 });
-// }
+// Get the current users info based on the token
+export async function GET(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  if (!token?.id)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const user = await prisma.user.findUnique({
+    where: { id: Number(token.id) },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+    },
+  });
+
+  return NextResponse.json(user);
+}

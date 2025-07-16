@@ -13,18 +13,16 @@ const LoginPage = () => {
   const { register, handleSubmit } = useForm<LoginForm>();
 
   const onSubmit = handleSubmit(async (data) => {
-    // Handle login logic here
-    console.log("Login data:", data);
     await signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/issues/new",
+      callbackUrl: "/",
     });
   });
 
   return (
     <Card className="min-w-[300px]">
-      <Heading as="h2" size="4" className="pb-4">
+      <Heading as="h2" size="4" className="pb-4 text-shadow-zinc-900">
         Login here
       </Heading>
       <form className="flex flex-col gap-2" onSubmit={onSubmit}>
