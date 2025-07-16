@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type ProfileProps = {
   id: number;
@@ -23,7 +23,7 @@ const ProfilePage = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadProfile = async () => {
       const fetchedProfile = await fetchProfile();
       if (fetchedProfile) {
@@ -34,7 +34,21 @@ const ProfilePage = () => {
     loadProfile();
   }, []);
 
-  return <div>ProfilePage</div>;
+  return (
+    <div>
+      <h1>Profile Page</h1>
+      {profile ? (
+        <div>
+          <p>
+            Name: {profile.firstName} {profile.lastName}
+          </p>
+          <p>Email: {profile.email}</p>
+        </div>
+      ) : (
+        <p>Loading profile...</p>
+      )}
+    </div>
+  );
 };
 
 export default ProfilePage;
