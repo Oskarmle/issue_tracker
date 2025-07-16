@@ -4,14 +4,13 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import { useSession } from "next-auth/react";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -31,11 +30,6 @@ const NewIssuePage = () => {
       description: "",
     },
   });
-
-  // Route protection
-  const { status } = useSession();
-  if (status === "loading") return <div>Loading...</div>;
-  if (status === "unauthenticated") redirect("/auth/login");
 
   const onSubmit = handleSubmit(async (data) => {
     try {
