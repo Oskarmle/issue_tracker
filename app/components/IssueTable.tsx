@@ -2,8 +2,10 @@
 import { Table } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import Link from "next/link";
 
 type IssueForm = {
+  id: number
   title: string;
   description: string;
   status: string;
@@ -15,7 +17,7 @@ type IssueForm = {
   };
 };
 
-const IssueTable = () => {
+const IssueTable = ({ userId }: { userId?: string }) => {
   const [issues, setIssues] = useState<IssueForm[]>([]);
 
   const fetchIssues = async () => {
@@ -37,7 +39,7 @@ const IssueTable = () => {
       setIssues(fetchedIssues);
     };
     loadIssues();
-  }, []);
+  }, [userId]);
 
   return (
     <div>
@@ -68,7 +70,9 @@ const IssueTable = () => {
         <Table.Body>
           {issues.map((issue) => (
             <Table.Row key={issue.title}>
-              <Table.Cell>{issue.title}</Table.Cell>
+              <Table.Cell>
+                <Link href={`/issues/${issue.id}`} className="text-blue-600 hover:underline">{issue.title}</Link>
+              </Table.Cell>
               <Table.Cell>{issue.description}</Table.Cell>
               <Table.Cell>
                 <span

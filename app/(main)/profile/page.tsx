@@ -1,4 +1,5 @@
 "use client";
+import { Heading, Text } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 
 type ProfileProps = {
@@ -36,16 +37,16 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <h1>Profile Page</h1>
+      <Heading as="h1">Profile Page</Heading>
       {profile ? (
-        <div>
-          <p>
+        <div className="flex flex-col">
+          <Text>
             Name: {profile.firstName} {profile.lastName}
-          </p>
-          <p>Email: {profile.email}</p>
+          </Text>
+          <Text>Email: {profile.email}</Text>
         </div>
       ) : (
-        <p>Loading profile...</p>
+        <Text as="p">Loading profile...</Text>
       )}
     </div>
   );
